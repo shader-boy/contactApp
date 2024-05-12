@@ -19,13 +19,13 @@ const ContactForm = ({ existingContact = {}, updateCallBack }) => {
       "http://127.0.0.1:5000/" +
       (updating ? `update_contact/${existingContact.id}` : "create_contact");
     const options = {
-      method: "POST",
+      method: updating ? "PATCH" : "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     };
-    const respnse = await fetch(url, options);
+    const response = await fetch(url, options);
     if (response.status !== 201 && response.status !== 200) {
       const data = await response.json();
       alert(data.message);
@@ -49,7 +49,7 @@ const ContactForm = ({ existingContact = {}, updateCallBack }) => {
         <label htmlFor="lastName">Last Name:</label>
         <input
           type="text"
-          id="lastname"
+          id="lastName"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
